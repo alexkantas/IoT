@@ -1,0 +1,46 @@
+.header{
+    margin-bottom: 2em;
+}
+
+.raspImage:hover.shadowfilter {
+     filter: drop-shadow(-1px 8px 7px rgba(0, 0, 0, 0.5));
+}
+
+.raspImage{
+    width: 50px;
+}
+
+.littleMargin{
+    margin-top: 5px;
+}
+
+.topMargin{
+    margin-top: 2em;
+}
+
+.centeredElements{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.greenBulp{
+    color: green;
+}
+
+.redBulp{
+    color: maroon;
+}
+
+.temperature{
+    margin: 0 !important;
+}
+
+.sideCam{
+    margin: 0.8em auto 0 auto;
+}
+
+.map{
+    height: 70vh;
+}

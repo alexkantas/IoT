@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>
+    <%=title%>
+  </title>
+  <meta name="author" content="Alexandros Kantas">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.css">
+</head>
+
+<body class="hero is-info is-fullheight">
+  <!-- Hero head: will stick at the top -->
+  <div class="hero-head">
+    <header class=" navbar">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+          <h1 class="title has-text-dark">
+            <%=title%>
+          </h1>
+        </a>
+      </div>
+    </header>
+  </div>
+
+  <!-- Hero content: will be in the middle -->
+  <div id="app" class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title">
+        <p class="icon">
+          <i class="fa  fa-map-marker fa-2x"></i>
+        </p>
+        <p>Είσαι <strong>{{distance}}</strong> μέτρα μακριά από το σπίτι σου</p>
+      </h1>
+      <h2 class="subtitle">
+        <%=home.geocodedAddress%>
+      </h2>
+    </div>
+  </div>
+
+  <!-- Hero footer: will stick at the bottom -->
+  <div class="hero-foot has-text-centered">
+    kantas.net
+  </div>
+  <script>
+  var homePostition = {latitude:<%=home.lat%>,longitude:<%=home.lng%>}
+  </script>
+  <script src="socket.io/socket.io.js"></script>
+  <script>
+    var socket = io('192.168.1.66:5000');
+</script>
+  <script src="public/js/nosleep.js"></script>
+  <script src="public/js/geolib.js"></script>
+  <script src="public/js/vue.js"></script>
+  <script src="public/js/dist/location.js"></script>
+</body>
+
+</html>

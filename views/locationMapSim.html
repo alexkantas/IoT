@@ -31,6 +31,7 @@
   <!-- Hero content: will be in the middle -->
   <div id="app" class="hero-body">
     <div class="container has-text-centered">
+      <section id="map" class="mapTrack">Loading map...</section>
       <h1 class="title">
         <p class="icon">
           <i class="fa  fa-map-marker fa-2x"></i>
@@ -38,9 +39,11 @@
         <p>Είσαι
           <strong>{{distance}}</strong> μέτρα μακριά από το σπίτι σου</p>
       </h1>
-      <h2 class="subtitle">
-        <%=home.geocodedAddress%>
-      </h2>
+      <p>
+        <button class="button is-primary is-inverted" @click="setDistance(250)"><div class="icon"><i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i></div></button>
+        <button class="button is-primary is-inverted" @click="resetDistance"><div class="icon"><i class="fa fa-undo fa-2x" aria-hidden="true"></i></div></button>
+        <button class="button is-primary is-inverted" @click="setDistance(-250)"><div class="icon"><i class="fa fa-minus-circle fa-2x" aria-hidden="true"></i></div></button>
+      </p>
     </div>
   </div>
 
@@ -51,7 +54,7 @@
   <script>
     var homePostition = { latitude:<%=home.lat %>,longitude:<%=home.lng %>}
   </script>
-  <script src="socket.io/socket.io.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <script>
     var socket = io('192.168.1.66:5000');
     var username = '<%=username%>';
@@ -59,7 +62,8 @@
   <script src="/public/js/nosleep.js"></script>
   <script src="/public/js/geolib.js"></script>
   <script src="/public/js/vue.js"></script>
-  <script src="/public/js/location.js"></script>
+  <script src="/public/js/locationMapSim.js"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLEzuHdS3Y6eLXyXRLGIGIoVDBoYMVjBo&callback=initMap"></script>
 </body>
 
 </html>

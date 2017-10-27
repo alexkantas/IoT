@@ -17,10 +17,9 @@ function startTracking() {
 }
 
 function watchLocation(position) {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
+    const { latitude, longitude } = position.coords;
     app.distance = geolib.getDistance({ latitude, longitude }, homePostition);
-    socket.emit('setLocation',app.distance);
+    socket.emit('setLocation', {distance:app.distance,location:{latitude, longitude },username});
 }
 
 function displayError(err) {

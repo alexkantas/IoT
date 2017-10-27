@@ -31,7 +31,7 @@
   <!-- Hero content: will be in the middle -->
   <div id="app" class="hero-body">
     <div class="container has-text-centered">
-      <section id="map" class="map">1</section>
+      <section id="map" class="map">Loading map...</section>
       <h2 class="subtitle" @click="showModal(true)">
         {{homeAddr}}
       </h2>
@@ -47,12 +47,12 @@
           <h1 class="title has-text-dark">Are you Sure that you want to set your home at latitude {{lat.toFixed(2)}} and longitude {{lng.toFixed(2)}} ?</h1>
         </section>
         <footer class="modal-card-foot">
-          <form action="/setHome" method="post">
+          <div action="/setHome" method="post">
             <input v-model="lat" name="lat" type="hidden">
             <input v-model="lng" name="lng" type="hidden">
             <input v-model="homeAddr" name="geocodedAddress" type="hidden">
-            <button class="button is-success">Update Home</button>
-          </form>
+            <button type="button" class="button is-success" @click="updateHome">Update Home</button>
+          </div>
           <button class="button" @click="showModal(false)">Cancel</button>
         </footer>
       </div>

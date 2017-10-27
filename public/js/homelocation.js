@@ -21,9 +21,10 @@ const app = new Vue({
         },
         updateHome() {
             this.isModalLoading = true;
-
+            console.log('sent the data...');
             fetch('/setHome', {
                 method: 'post',
+                credentials: "same-origin",
                 body: JSON.stringify({
                     lat: this.lat,
                     lng: this.lng,
@@ -31,9 +32,9 @@ const app = new Vue({
                 }),
                 headers: {
                     "Content-Type": "application/json"
-                  }
+                }
             }).then(r => r.json()).then(r => {
-                this.homeAddr = `Home updated Successfully to "${r.geocodedAddress}" !`;
+                this.homeAddr = r.homeAddr;
                 this.isModalActive = false;
                 this.isModalLoading = false;
                 console.log(r);
@@ -50,6 +51,8 @@ const app = new Vue({
 function initMap() {
     geocoder = new google.maps.Geocoder;
     let position = { lat, lng };
+    let icon = '/public/img/house-icon.png';
+
     map = new google.maps.Map(document.getElementById('map'), {
         center: position,
         zoom: 14
@@ -57,10 +60,11 @@ function initMap() {
 
     marker = new google.maps.Marker({
         position,
-        map
+        map,
+        icon
     });
 
-    map.addListener('click', function (e) {
+    map.addListener('click', (e) => {
         placeMarkerAndPanTo(e.latLng, map);
     });
 

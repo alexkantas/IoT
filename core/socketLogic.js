@@ -38,9 +38,9 @@ function socketLogic(app, port) {
             socket.broadcast.to('raspberry').emit('updateImage', data);
         })
 
-        socket.on('setLocation', location => {
-            io.emit('userLocation', location);
-            if (rules(location)) console.log(rules());
+        socket.on('setLocation', locationData => {
+            io.emit('userLocation', locationData);
+            if (rules(locationData)) console.log(rules());
         })
 
 
@@ -70,6 +70,13 @@ function socketLogic(app, port) {
             const { deviceId, isEnabled } = data;
             io.emit('deviceStatus', { deviceId, isEnabled });
         })
+
+        socket.on('imageStream', data => {
+            console.log(`Take and send image ${data.number}`);
+            io.emit('newimage', data);
+        })
+        // let i = 0;
+        // setInterval(()=>socket.emit('newimage', {number:i++,image:'hi'}),1000)
 
         //Common
         socket.on('disconnect', () => {

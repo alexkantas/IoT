@@ -124,7 +124,8 @@ const app = new Vue({
         //dance.call(this);
         askReport();
         socket.on('userLocation', (data) => {
-            this.userDistance = data;
+            console.log(data);
+            this.userDistance = data.distance;
         });
     },
     computed: {

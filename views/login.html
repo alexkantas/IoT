@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+        <%=title%>
+    </title>
+    <meta name="author" content="Alexandros Kantas">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.css">
+    <link rel="stylesheet" href="public/css/style.css">
+</head>
+
+<body class="hero is-info is-fullheight">
+    <!-- Hero head: will stick at the top -->
+    <div class="hero-head">
+        <header class=" navbar">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="#">
+                    <h1 class="title has-text-dark">
+                        Log In
+                    </h1>
+                </a>
+            </div>
+        </header>
+    </div>
+
+    <!-- Hero content: will be in the middle -->
+    <div id="app" class="hero-body">
+        <div class="container">
+
+            <form class="loginform" action="/" method="post">
+                <% if (wrongInfo) { %>
+                <section class="message is-danger">
+                    <div class="message-header">
+                        <p>Wrong Credentials</p>
+                        <button class="delete" aria-label="delete"></button>
+                    </div>
+                    <div class="message-body">
+                        Your username and password combination are wrong!
+                    </div>
+                </section>
+                <% } %>
+                <div class="field">
+                    <label class="label">Username</label>
+                    <div class="control">
+                        <input class="input" type="text" name="username" placeholder="Type your username">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Password</label>
+                    <div class="control">
+                        <input class="input" type="password" name="password" placeholder="Type your password">
+                    </div>
+                </div>
+                <p class="control">
+                    <button class="button is-success">
+                        Login
+                    </button>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero footer: will stick at the bottom -->
+    <div class="hero-foot has-text-centered">
+        kantas.net
+    </div>
+</body>
+
+</html>

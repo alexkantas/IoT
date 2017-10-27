@@ -44,3 +44,14 @@
 .map{
     height: 70vh;
 }
+
+.mapTrack{
+    height: 45vh;
+    margin-bottom: 1.5em;
+}
+
+@media only screen and (min-width: 1035px) {
+    .loginform{
+        padding: 0 15em;
+    }
+}

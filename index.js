@@ -19,6 +19,10 @@ app.engine('html', cons.ejs); // assign the ejs engine to .html files
 app.set('view engine', 'html'); // set .html as the default extension
 app.set('views', __dirname + '/views');
 
+// Seesions and Passport setup
+app.use(session({ secret: 'th3s1s', saveUninitialized: true, resave: true }));
+require('./core/passport')(app);
+
 // Socket IO logic
 require('./core/socketLogic')(app, port);
 

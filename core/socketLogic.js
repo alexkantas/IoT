@@ -4,6 +4,7 @@ function socketLogic(app, port) {
     const io = require('socket.io').listen(server);
 
     // Application variables
+    const trackUsers = new Set();
     const raspberryPassword = 'superSecretCode';
     const isNotRaspberry = data => (data.password != raspberryPassword) ? true : false;
     let raspberryConnected = false;
@@ -39,6 +40,7 @@ function socketLogic(app, port) {
         })
 
         socket.on('setLocation', locationData => {
+            trackUsers.add(locationData.username);
             io.emit('userLocation', locationData);
             if (rules(locationData)) console.log(rules());
         })

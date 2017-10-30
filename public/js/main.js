@@ -1,4 +1,122 @@
+let map;
+let homeMarker;
+let userMarker;
 window.Event = new Vue();
+
+Vue.component('mapmodal', {
+    data() {
+        return {
+            homelocation: {},
+            userlocation: {}
+        }
+    },
+    mounted() {
+        initMap()
+        Event.$on('reloadMap', data => {
+            setTimeout(() => {
+                google.maps.event.trigger(map, 'resize');
+                if (data && data.location) map.panTo(data.location);
+            }, 100);
+        })
+    },
+    template: `<div class="modal is-active">
+    <div class="modal-background" @click="$emit('close')"></div>
+    <div class="modal-content">
+    <div class="modalMap notification is-info">
+    <section id="map" class="map">Loading map...</section>
+    </div></div>
+    <button class="modal-close is-large" aria-label="close" @click="$emit('close')"></button>
+    </div>`
+})
+
+Vue.component('userbox', {
+    props: ['username', 'index', 'distance'],
+    data() {
+        return {
+            userDistance: 1000,
+        }
+    },
+    computed: {
+        isUserNearby() {
+            return this.userDistance > 0 && this.userDistance < 1000;
+        }
+    },
+    mounted() {
+        this.userDistance = this.distance;
+        socket.on('userLocation', (data) => {
+            if (data.username != this.username) return;
+            const userJustArrived = data.distance < 1000 && !(this.userDistance > 0 && this.userDistance < 1000) && data.distance < this.userDistance // True if user not home, new distance less than 1000 and smaller tha previous
+            if (userJustArrived) {
+                let title = `${this.username} just arrived at home!`;
+                iziToast.success({
+                    title,
+                    timeout: 10000
+                });
+                new Notification(title);
+            }
+            this.userDistance = data.distance;
+            console.log(data.location);
+            window.Event.$emit('updateMarker', { username: this.username, index: this.index, position: { lat: data.location.latitude, lng: data.location.longitude } });
+        });
+    },
+    template: `<div class="column is-narrow">
+    <div :class="{'is-danger':!isUserNearby,'is-success':isUserNearby}" class="notification">
+    <span class="icon littleMargin">
+    <i class="fa  fa-map-marker fa-2x"></i>
+    </span>
+    {{username}} is <strong>{{userDistance}}</strong> meters away from home!
+    </div></div>`
+});
+
+Vue.component('usersarea', {
+    data() {
+        return {
+            users: [],
+            mapModal: false,
+        }
+    },
+    methods: {
+        showMap(username, i) {
+            this.mapModal = true;
+            this.currentUser = username;
+            userMarker.setPosition(this.users[i].position);
+            Event.$emit('reloadMap', { location: this.users[i].position });
+        },
+        hideModal() {
+            this.mapModal = false;
+        }
+    },
+    mounted() {
+        Event.$on('updateMarker', data => {
+            iziToast.warning({
+                title: data.username,
+                message: data.index,
+                timeout: 700,
+                position: 'topRight'
+            });
+            this.users[data.index].position = data.position;
+            if (this.currentUser === data.username) {
+                userMarker.setPosition(data.position);
+                map.panTo(data.position);
+            }
+            Event.$emit('reloadMap');
+        });
+        socket.on('userLocation', (data) => {
+            console.log('Dater are ' + this.users.findIndex(u => u.username === data.username));
+            if (this.users.findIndex(u => u.username === data.username) === -1) {
+                this.users.push({ username: data.username, distance: data.distance, position: { lat: data.location.latitude, lng: data.location.longitude } });
+            }
+        })
+    },
+    template: `<div>
+    <mapmodal v-show="mapModal" @close="hideModal"></mapmodal>
+    <section class="columns usersArea">
+        <template  v-for="(user,index) of users">
+            <userbox :username="user.username" :index="index" :distance="user.distance" @click.native="showMap(user.username,index)"></userbox>
+        </template>
+    </section>
+    </div>`
+})
 
 Vue.component('device', {
     props: {
@@ -109,52 +227,6 @@ Vue.component('image-area', {
     }
 });
 
-const app = new Vue({
-    el: '#root',
-    data: {
-        userDistance: -1,
-        raspberryConnected: false,
-        temperature: 0,
-        humidity: 0
-    },
-    created() {
-        listen.call(this);
-    },
-    mounted() {
-        //dance.call(this);
-        askReport();
-        socket.on('userLocation', (data) => {
-            console.log(data);
-            this.userDistance = data.distance;
-        });
-    },
-    computed: {
-        isUserNearby() {
-            return this.userDistance > 0 && this.userDistance < 1000;
-        }
-    }
-});
-
-function dance() {
-    setTimeout(() => {
-        this.raspberryConnected = !this.raspberryConnected
-    }, 5000);
-
-    setInterval(() => {
-        this.userDistance -= 555;
-        if (this.userDistance < 0 || this.userDistance > 3000) this.userDistance = 3000;
-        Event.$emit('devStatusChanged', 1, true);
-        socket.emit('initial', { userDistance: this.userDistance });
-    }, 4500)
-
-    setInterval(() => {
-        if (this.userDistance < 0 || this.userDistance > 3000) this.userDistance = 3000;
-        this.userDistance += 155;
-        Event.$emit('devStatusChanged', 2, false);
-        Event.$emit('devStatusChanged', 1, false);
-    }, 9500)
-}
-
 function askReport() {
     socket.emit('raspberryStatus');
     socket.emit('weatherData');
@@ -177,3 +249,64 @@ function listen() {
         console.log(err);
     });
 }
+
+function initMap() {
+    let position = { lat: 35.32098178540996, lng: 25.10274052619934 };
+    let icon = '/public/img/house-icon.png';
+
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: position,
+        zoom: 14
+    });
+
+    homeMarker = new google.maps.Marker({
+        map,
+        position,
+        icon
+    });
+
+    userMarker = new google.maps.Marker({
+        map,
+        title: 'Your position'
+    });
+
+    console.log('Map i showing!!');
+}
+
+const app = new Vue({
+    el: '#root',
+    data: {
+        raspberryConnected: false,
+        temperature: 0,
+        humidity: 0,
+        currentUser: '',
+        loading: true
+    },
+    created() {
+        listen.call(this);
+    },
+    mounted() {
+        askReport();
+        this.loading = false;
+
+        if (window.Notification && Notification.permission !== "denied" && Notification.permission !== "granted") {
+            Notification.requestPermission().then(response => {
+                if (response === 'denied') {
+                    iziToast.warning({
+                        title: 'Notifications',
+                        message: `It's Ok you still can watch these notifications
+                                 and can enable the browser's web notifications later by click the page options left to addrees bar`,
+                        timeout: 15000,
+                        position: 'topLeft'
+                    });
+                }
+            })
+        }
+    },
+    methods: {
+
+    },
+    computed: {
+
+    }
+});

@@ -62,6 +62,7 @@ const mainController = function () {
     const home = (req, res) => {
         res.render('index', {
             title: 'Home Monitoring',
+            username: req.user.username,
             url: 'localhost:5000'
         })
     }

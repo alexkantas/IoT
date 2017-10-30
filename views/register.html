@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+        <%=title%>
+    </title>
+    <meta name="author" content="Alexandros Kantas">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.css">
+    <link rel="stylesheet" href="public/css/style.css">
+</head>
+
+<body class="hero is-info is-fullheight">
+    <!-- Hero head: will stick at the top -->
+    <div class="hero-head">
+        <header class=" navbar">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="#">
+                    <h1 class="title has-text-dark">
+                        Register
+                    </h1>
+                </a>
+            </div>
+        </header>
+    </div>
+
+    <!-- Hero content: will be in the middle -->
+    <div id="app" class="hero-body">
+        <div class="container">
+
+            <form class="loginform" action="/register" method="post">
+                <div class="field">
+                    <label class="label">Username</label>
+                    <div class="control">
+                        <input class="input" type="text" name="username" placeholder="Type the username you wish to have">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Password</label>
+                    <div class="control">
+                        <input class="input" type="password" name="password" placeholder="Type the password you wish to have">
+                    </div>
+                </div>
+                <p class="control">
+                    <button class="button is-danger">
+                        Register
+                    </button>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero footer: will stick at the bottom -->
+    <div class="hero-foot has-text-centered">
+        kantas.net
+    </div>
+</body>
+
+</html>

@@ -12,8 +12,11 @@ const Router = function () {
     mainRouter.route('/').get(mainController.login);
     mainRouter.route('/').post(mainController.authenticate);
     mainRouter.route('/logIn').get(mainController.loginForm);
+    mainRouter.route('/logOut').get(mainController.logout);
+    mainRouter.route('/register').get(mainController.registerForm);
+    mainRouter.route('/register').post(mainController.register);
     mainRouter.use(mainController.authMildware);
-    mainRouter.route('/welcome').get(mainController.home);
+    mainRouter.route('/dashboard').get(mainController.home);
     mainRouter.route('/upLoadImage/camera').post(mainController.camImageStore);
     mainRouter.route('/setHome').get(mainController.setHome);
     mainRouter.route('/setHome').post(mainController.updateHomeData);

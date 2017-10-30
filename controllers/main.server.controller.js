@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json()
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 const passport = require('passport');
+const User = require("../models/user.model.js");
 
 //
 let homeInfo = { lat: 35.32098178540996, lng: 25.10274052619934 };
@@ -19,7 +20,7 @@ const mainController = function () {
     }
 
     const login = (req, res) => {
-        if (req.user) return res.redirect('/welcome');
+        if (req.user) return res.redirect('/dashboard');
         res.render('login', {
             title: 'Home Monitoring - LogIn',
             wrongInfo: false
@@ -41,7 +42,7 @@ const mainController = function () {
                 if (!user) { res.render('login', { title: 'Home Monitoring - LogIn', wrongInfo: true }); return; }
                 req.logIn(user, err => {
                     if (err) { console.log(err); return }
-                    return res.redirect('/welcome');
+                    return res.redirect('/dashboard');
                 });
             })(req, res, next);
         }]
@@ -50,6 +51,30 @@ const mainController = function () {
         req.logout();
         res.redirect('/');
     }
+
+    const registerForm = (req, res) => {
+        res.render('register', {
+            title: 'Home Monitoring - Register',
+            wrongInfo: false
+        })
+    }
+
+    const register = [
+        urlencodedParser,
+        (req, res) => {
+            const { username, password } = req.body;
+            const user = new User({
+                username,
+                password
+            });
+            user.save()
+                .then(r => {
+                    res.end('You are registered successfully!');
+                })
+                .catch(err => {
+                    res.end('Error during registration' + err);
+                })
+        }];
 
     const authMildware = (req, res, next) => {
         if (req.user) {
@@ -144,7 +169,7 @@ const mainController = function () {
         });
     };
 
-    return { trackUserSim, loginForm, trackUserMap, login, authMildware, authenticate, dataPesistanceMildware, home, camImageStore, setHome, updateHomeData, trackUser, canvas }
+    return { register, registerForm, logout, trackUserSim, loginForm, trackUserMap, login, authMildware, authenticate, dataPesistanceMildware, home, camImageStore, setHome, updateHomeData, trackUser, canvas }
 }
 
 module.exports = mainController();

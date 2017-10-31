@@ -227,6 +227,62 @@ Vue.component('image-area', {
     }
 });
 
+Vue.component('video-area', {
+    props: ['cssClasses', 'imageUrl', 'camId'],
+    data() {
+        return {
+            dateStamp: 0,
+            activeCapture: false,
+            image: ''
+        }
+    },
+    template: `<div class="tile is-child box notification is-info">
+    <p class="title">Εικόνα</p>
+    <p><slot></slot><strong>{{imageDate}}</strong></p>
+    <figure :class="cssObj">
+        <img :src="image">
+    </figure>
+    <p class="topMargin has-text-centered"><button class="button is-large is-warning is-outlined is-inverted" @click="startCapture" :disabled="activeCapture">{{buttonText}}</button></p>
+</div>`,
+    mounted() {
+        this.image = this.imageURL;
+        console.log(this.cssClasses, this.imageUrl, this.camId);
+        socket.emit('getCaptureStatus',{camId:this.camId})
+        socket.on('imageStream', (data) => {
+            console.log('video',5);
+            if (data.camId == this.camId) {
+                this.dateStamp = parseInt(data.dateStamp);
+                this.image=data.image;
+            }
+        });
+        socket.on('captrureStatus',data => {
+            if (data.camId != this.camId) return;
+            this.activeCapture = data.captureStatus
+        });
+    },
+    methods: {
+        startCapture() {
+            console.log('video',1);
+            this.activeCapture = true;
+            socket.emit('startCapture', { camId: this.camId });
+        }
+    },
+    computed: {
+        cssObj() {
+            return this.cssClasses.split(' ').reduce((obj, val) => (obj[val] = true, obj), {});
+        },
+        getImageURL() {
+            return `${this.imageUrl}?d=${this.dateStamp}`;
+        },
+        imageDate() {
+            return this.dateStamp > 0 ? moment(this.dateStamp).calendar() : '';
+        },
+        buttonText(){
+            return this.activeCapture ? 'Ζωντανή Εικόνα' : 'Έναρξη Λήψης' ; 
+        }
+    }
+});
+
 function askReport() {
     socket.emit('raspberryStatus');
     socket.emit('weatherData');

@@ -45,6 +45,18 @@ function socketLogic(app, port) {
             if (rules(locationData)) console.log(rules());
         })
 
+        socket.on('startCapture', data => {
+            console.log('video',2);
+            // socket.broadcast.to('raspberry').emit('startCapture', data);
+            io.emit('startCapture', data);
+        })
+
+        socket.on('getCaptureStatus', data => {
+            console.log('video',2);
+            // socket.broadcast.to('raspberry').emit('startCapture', data);
+            io.emit('getCaptureStatus', data);
+        })
+
 
         //Raspberry -> Server
         socket.on('welcomeRaspberry', data => {
@@ -74,11 +86,14 @@ function socketLogic(app, port) {
         })
 
         socket.on('imageStream', data => {
-            console.log(`Take and send image ${data.number}`);
-            io.emit('newimage', data);
+            console.log('video',4);
+            io.emit('imageStream', data);
         })
-        // let i = 0;
-        // setInterval(()=>socket.emit('newimage', {number:i++,image:'hi'}),1000)
+
+        socket.on('captrureStatus', data => {
+            console.log('sent status',2);
+            io.emit('captrureStatus', data);
+        })
 
         //Common
         socket.on('disconnect', () => {

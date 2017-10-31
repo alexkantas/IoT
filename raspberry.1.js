@@ -9,6 +9,7 @@ const Webcam = NodeWebcam.create({ width: 256, height: 256, output: "jpeg", call
 
 // Application variables
 const password = 'superSecretCode';
+let captureActive = false;
 
 console.log('Raspberry running ...');
 
@@ -33,12 +34,26 @@ function capture() {
 
         }
 
-        socket.emit('imageStream', { number: ++i, image:data });
+        socket.emit('imageStream', { camId: 2, dateStamp: Date.now(), image: data });
 
-        setTimeout(capture, 25);
+        if (captureActive) setTimeout(capture, 25);
 
     });
 
 }
 
-setTimeout(capture, 2000);
+socket.on('startCapture', (data) => {
+    console.log('video',3);
+    if(captureActive) return;
+    captureActive = true;
+    capture();
+    setTimeout(() => {
+        captureActive = false;
+        console.log('sent status',1);
+        socket.emit('captrureStatus', { camId: 2, captureStatus: false })
+    }, 50000);
+});
+
+socket.on('getCaptureStatus',data=>{
+    socket.emit('captrureStatus', { camId: 2, captureStatus: captureActive });
+});

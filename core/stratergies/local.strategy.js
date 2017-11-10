@@ -4,7 +4,7 @@ const User = require("../../models/user.model.js");
 const mongoose = require('mongoose');
 const mongoUrl = 'mongodb://localhost/thesis';
 const mongoConnect = mongoose.connect(mongoUrl, { useMongoClient: true });
-mongoose.Promise = require('bluebird');
+mongoose.Promise = global.Promise;
 
 
 const userStategy = function () {
@@ -12,7 +12,7 @@ const userStategy = function () {
         new LocalStategy({ usernameField: 'username', passwordField: 'password' },
             (username, password, done) => {
                 console.log('Mesa sth strategi!!');
-                User.findOne({ username, password }, )
+                User.findOne({ username, password })
                     .then(user => {
                         console.log('Brhkame ton user!!');
                         if (user) {

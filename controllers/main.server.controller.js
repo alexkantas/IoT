@@ -10,6 +10,7 @@ const User = require("../models/user.model.js");
 
 //
 let homeInfo = { lat: 35.32098178540996, lng: 25.10274052619934 };
+const url = 'https://thesis.kantas.net/';
 
 const mainController = function () {
 
@@ -32,6 +33,16 @@ const mainController = function () {
             title: 'Home Monitoring - LogIn',
             wrongInfo: false
         })
+    }
+
+    const links = (req, res) => {
+        res.render('links', {
+            title: 'Home Monitoring - links'
+        })
+    }
+
+    const documentation = (req, res) => {
+        res.redirect('/public/documentation/kantasThesis.pdf')
     }
 
     const authenticate = [
@@ -69,7 +80,7 @@ const mainController = function () {
             });
             user.save()
                 .then(r => {
-                    res.end('You are registered successfully!');
+                    res.send('You are registered successfully! <a href="/">You can log-in now!</a>');
                 })
                 .catch(err => {
                     res.end('Error during registration' + err);
@@ -88,7 +99,15 @@ const mainController = function () {
         res.render('index', {
             title: 'Home Monitoring',
             username: req.user.username,
-            url: 'localhost:5000'
+            url
+        })
+    }
+
+    const homeSimple = (req, res) => {
+        res.render('indexSimple', {
+            title: 'Home Monitoring',
+            username: req.user.username,
+            url
         })
     }
 
@@ -139,7 +158,7 @@ const mainController = function () {
             title: "Location",
             home: homeInfo,
             username: req.user.username,
-            url: 'http://localhost:5000'
+            url
         });
     };
 
@@ -149,7 +168,7 @@ const mainController = function () {
             title: "Location",
             home: homeInfo,
             username: req.user.username,
-            url: 'http://localhost:5000'
+            url
         });
     };
 
@@ -159,17 +178,17 @@ const mainController = function () {
             title: "Location",
             home: homeInfo,
             username: req.user.username,
-            url: 'http://localhost:5000'
+            url
         });
     };
 
     const canvas = (req, res) => {
         res.render('canvas', {
-            url: 'http://localhost:5000'
+            url
         });
     };
 
-    return { register, registerForm, logout, trackUserSim, loginForm, trackUserMap, login, authMildware, authenticate, dataPesistanceMildware, home, camImageStore, setHome, updateHomeData, trackUser, canvas }
+    return { documentation, register, links, registerForm, homeSimple, logout, trackUserSim, loginForm, trackUserMap, login, authMildware, authenticate, dataPesistanceMildware, home, camImageStore, setHome, updateHomeData, trackUser, canvas }
 }
 
 module.exports = mainController();

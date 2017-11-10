@@ -46,13 +46,13 @@ function socketLogic(app, port) {
         })
 
         socket.on('startCapture', data => {
-            console.log('video',2);
+            console.log('video', 2);
             // socket.broadcast.to('raspberry').emit('startCapture', data);
             io.emit('startCapture', data);
         })
 
         socket.on('getCaptureStatus', data => {
-            console.log('video',2);
+            console.log('video', 2);
             // socket.broadcast.to('raspberry').emit('startCapture', data);
             io.emit('getCaptureStatus', data);
         })
@@ -86,12 +86,12 @@ function socketLogic(app, port) {
         })
 
         socket.on('imageStream', data => {
-            console.log('video',4);
+            console.log('video', 4);
             io.emit('imageStream', data);
         })
 
         socket.on('captrureStatus', data => {
-            console.log('sent status',2);
+            console.log('sent status', 2);
             io.emit('captrureStatus', data);
         })
 

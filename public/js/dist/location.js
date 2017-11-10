@@ -17,23 +17,16 @@ function startTracking() {
     var options = { enableHighAccuracy: true, maximumAge: 2000 };
     navigator.geolocation.watchPosition(watchLocation, displayError, options);
 }
-var show = 4;
+
 function watchLocation(position) {
-    var latitude = position.coords.latitude;
-    var longitude = position.coords.longitude;
+    var _position$coords = position.coords,
+        latitude = _position$coords.latitude,
+        longitude = _position$coords.longitude;
+
     app.distance = geolib.getDistance({ latitude: latitude, longitude: longitude }, homePostition);
-    shows(app.distance);
-    socket.emit('setLocation', app.distance);
+    socket.emit('setLocation', { distance: app.distance, location: { latitude: latitude, longitude: longitude }, username: username });
 }
 
 function displayError(err) {
     console.warn('ERROR(' + err.code + '): ' + err.message);
-}
-
-function shows(d){
-    console.log(show,d);
-    if(show >5 || show < 0) show = 0;
-    if(show == 4 || show == 1)
-    alert(d);
-    show++;
 }

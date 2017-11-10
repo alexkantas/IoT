@@ -25,6 +25,22 @@
                     </h1>
                 </a>
             </div>
+            <div class="navbar-menu">
+                <div class="navbar-end">
+                    <a href="/links" class="navbar-item has-text-grey-darker">
+                        Links
+                        <span class="icon">
+                            <i class="fa fa-link" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                    <a href="/register" class="navbar-item has-text-grey-darker">
+                        Register
+                        <span class="icon">
+                            <i class="fa fa-sign-in" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
         </header>
     </div>
 
@@ -34,34 +50,34 @@
 
             <form class="loginform" action="/" method="post">
                 <% if (wrongInfo) { %>
-                <section class="message is-danger">
-                    <div class="message-header">
-                        <p>Wrong Credentials</p>
-                        <button class="delete" aria-label="delete"></button>
-                    </div>
-                    <div class="message-body">
-                        Your username and password combination are wrong!
-                    </div>
-                </section>
-                <% } %>
-                <div class="field">
-                    <label class="label">Username</label>
-                    <div class="control">
-                        <input class="input" type="text" name="username" placeholder="Type your username">
-                    </div>
-                </div>
+                    <section class="message is-danger">
+                        <div class="message-header">
+                            <p>Wrong Credentials</p>
+                            <button class="delete" aria-label="delete"></button>
+                        </div>
+                        <div class="message-body">
+                            Your username and password combination are wrong!
+                        </div>
+                    </section>
+                    <% } %>
+                        <div class="field">
+                            <label class="label">Username</label>
+                            <div class="control">
+                                <input class="input" type="text" name="username" placeholder="Type your username">
+                            </div>
+                        </div>
 
-                <div class="field">
-                    <label class="label">Password</label>
-                    <div class="control">
-                        <input class="input" type="password" name="password" placeholder="Type your password">
-                    </div>
-                </div>
-                <p class="control">
-                    <button class="button is-success">
-                        Login
-                    </button>
-                </p>
+                        <div class="field">
+                            <label class="label">Password</label>
+                            <div class="control">
+                                <input class="input" type="password" name="password" placeholder="Type your password">
+                            </div>
+                        </div>
+                        <p class="control">
+                            <button class="button is-success">
+                                Login
+                            </button>
+                        </p>
             </form>
         </div>
     </div>

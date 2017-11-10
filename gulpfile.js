@@ -2,7 +2,11 @@ let gulp = require('gulp');
 let browserSync = require('browser-sync').create();
 // let cleanCSS = require('gulp-clean-css');
 let babel = require('gulp-babel');
+
+//
 var jsSourceFiles = 'public/js/location.js';
+var jsSourceFiles = 'public/js/locationMapSim.js';
+var jsSourceFiles = 'public/js/locationMap.js';
 var jsSourceFiles = 'public/js/main.js';
 
 gulp.task('watch-changes', () => {

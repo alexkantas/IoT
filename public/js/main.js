@@ -38,14 +38,16 @@ Vue.component('userbox', {
     },
     computed: {
         isUserNearby() {
-            return this.userDistance > 0 && this.userDistance < 1000;
+            const distanceLimit = 100;
+            return this.userDistance > 0 && this.userDistance < distanceLimit;
         }
     },
     mounted() {
         this.userDistance = this.distance;
         socket.on('userLocation', (data) => {
             if (data.username != this.username) return;
-            const userJustArrived = data.distance < 1000 && !(this.userDistance > 0 && this.userDistance < 1000) && data.distance < this.userDistance // True if user not home, new distance less than 1000 and smaller tha previous
+            const distanceLimit = 100;
+            const userJustArrived = data.distance < distanceLimit && !(this.userDistance > 0 && this.userDistance < distanceLimit) && data.distance < this.userDistance // True if user not home, new distance less than distanceLimit and smaller tha previous
             if (userJustArrived) {
                 let title = `${this.username} just arrived at home!`;
                 iziToast.success({
@@ -88,12 +90,6 @@ Vue.component('usersarea', {
     },
     mounted() {
         Event.$on('updateMarker', data => {
-            iziToast.warning({
-                title: data.username,
-                message: data.index,
-                timeout: 700,
-                position: 'topRight'
-            });
             this.users[data.index].position = data.position;
             if (this.currentUser === data.username) {
                 userMarker.setPosition(data.position);
@@ -245,7 +241,7 @@ Vue.component('video-area', {
     <p class="topMargin has-text-centered"><button class="button is-large is-warning is-outlined is-inverted" @click="startCapture" :disabled="activeCapture">{{buttonText}}</button></p>
 </div>`,
     mounted() {
-        this.image = this.imageURL;
+        this.image = this.imageUrl;
         console.log(this.cssClasses, this.imageUrl, this.camId);
         socket.emit('getCaptureStatus',{camId:this.camId})
         socket.on('imageStream', (data) => {

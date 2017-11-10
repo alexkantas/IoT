@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+        <%=title%>
+    </title>
+    <meta name="author" content="Alexandros Kantas">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.css">
+    <link rel="stylesheet" href="public/css/style.css">
+</head>
+
+<body class="hero  is-fullheight">
+    <!-- Hero head: will stick at the top -->
+    <div class="hero-head">
+        <header class=" navbar">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="#">
+                    <h1 class="title has-text-dark">
+                        Links
+                    </h1>
+                </a>
+            </div>
+            <div class="navbar-menu">
+                <div class="navbar-end">
+                    <a href="/" class="navbar-item has-text-grey-darker">
+                        Login
+                        <span class="icon">
+                            <i class="fa fa-sign-in" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <!-- Hero content: will be in the middle -->
+    <div id="app" class="hero-body">
+        <div class="container">
+            <nav class="panel">
+                <p class="panel-heading">
+                    Links
+                </p>
+                <a href="/track" class="panel-block is-primary">
+                    <span class="panel-icon">
+                        <i class="fa fa-link"></i>
+                    </span>
+                    Track
+                </a>
+                <a href="/track/map" class="panel-block is-primary">
+                    <span class="panel-icon">
+                        <i class="fa fa-link"></i>
+                    </span>
+                    Track with location feedback on the map
+                </a>
+                <a href="/track/map/simulate" class="panel-block">
+                    <span class="panel-icon">
+                        <i class="fa fa-link"></i>
+                    </span>
+                    Simulate tracking
+                </a>
+                <a href="/documentation" class="panel-block">
+                    <span class="panel-icon">
+                        <i class="fa fa-link"></i>
+                    </span>
+                    Documentation
+                </a>
+                <a href="/dashboard" class="panel-block">
+                    <span class="panel-icon">
+                        <i class="fa fa-link"></i>
+                    </span>
+                    Dashboard
+                </a>
+                <a href="/logIn" class="panel-block">
+                    <span class="panel-icon">
+                        <i class="fa fa-link"></i>
+                    </span>
+                        Login
+                </a>
+            </nav>
+
+        </div>
+    </div>
+
+    <!-- Hero footer: will stick at the bottom -->
+    <div class="hero-foot has-text-centered">
+        kantas.net
+    </div>
+</body>
+
+</html>

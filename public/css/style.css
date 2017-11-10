@@ -25,6 +25,10 @@
     flex-direction: column;
 }
 
+.centeredElements > .icon{
+    margin: 1.2em 0;
+}
+
 .greenBulp{
     color: green;
 }

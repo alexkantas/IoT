@@ -23,7 +23,7 @@ const app = new Vue({
     }
 });
 
-function updatetLocation() {
+function updateLocation() {
     app.distance = geolib.getDistance({ latitude, longitude }, homePostition);
     userMarker.setPosition({ lat: latitude, lng: longitude })
     socket.emit('setLocation', { distance: app.distance, location: { latitude, longitude }, username });
@@ -61,7 +61,7 @@ function initMap() {
         latitude = e.latLng.lat();
         longitude = e.latLng.lng();
         console.log({latitude,longitude});
-        updatetLocation()
+        updateLocation()
     });
 
     console.log('Map is showing!!');

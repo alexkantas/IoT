@@ -10,7 +10,6 @@ function socketLogic(app, port) {
     let raspberryConnected = false;
     let temperature = 20;
     let humidity = 70;
-    let rules = () => true;
 
     // Make io accessible to router
     app.use((req, res, next) => {
@@ -42,7 +41,7 @@ function socketLogic(app, port) {
         socket.on('setLocation', locationData => {
             trackUsers.add(locationData.username);
             io.emit('userLocation', locationData);
-            if (rules(locationData)) console.log(rules());
+            rules(locationData);
         })
 
         socket.on('startCapture', data => {
@@ -102,6 +101,16 @@ function socketLogic(app, port) {
             io.emit('raspberryStatus', { connected: raspberryConnected });
         })
     });
+
+    function rules(locationData) {
+        if (locationData.distance > 5) {
+            socket.broadcast.to('raspberry').emit('setDeviceStatus', { deviceId: 1, isEnabled: true });
+        }
+
+        if (locationData.distance > 5 && temperature < 18) {
+            socket.broadcast.to('raspberry').emit('setDeviceStatus', { deviceId: 2, isEnabled: true });
+        }
+    }
 }
 
 module.exports = socketLogic;

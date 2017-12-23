@@ -1,6 +1,6 @@
 # Home Monitoring IoT System
 
-This repo contains my thesis project. It’s dealing with the build and the implementation way of a location-based **Internet of Things** System.
+This repo contains my [thesis](apothesis.lib.teicrete.gr) project. It’s dealing with the build and the implementation way of a location-based **Internet of Things** System.
 
 ![diagram_of_system](https://alexzzzboom.github.io/img/thesis/fullSystemDiagram.jpg)
  

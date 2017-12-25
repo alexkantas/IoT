@@ -1,0 +1,20 @@
+{
+  "name": "wellcome",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "base64-img": "^1.0.3",
+    "node-dht-sensor": "0.0.32",
+    "node-webcam": "^0.4.3",
+    "raspicam": "^0.2.14",
+    "request": "^2.83.0",
+    "rpi-gpio": "^0.8.1",
+    "socket.io-client": "^2.0.3"
+  }
+}

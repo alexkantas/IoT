@@ -12,7 +12,7 @@ A detailed documentation, *in Greek*, can be found [here](https://thesis.kantas.
 
 ## Run the project in your machine
 
-You should have both git and NodeJS installed on your computer and your Raspberry Pi.
+You should have both **Git** and **NodeJS** installed on your **Computer** and your **Raspberry Pi**.
 
 ### On Computer
 
@@ -30,7 +30,7 @@ Your project now should be runing at port 5000 in your local machine
 3. `npm i`
 4. Type `nano rasperryPi.js` change the value of `url` variable in second line with your local IP.
 5. Check that the value of `sensorPin` variable on line 38 and `devices` variable on line 43 and 49 have the proper number based on your set up.  
-6. Type `Ctrl + X` to exit and `Y` to save the changes.
+6. In nano editor press `Ctrl + X` to exit and `Y` to save the changes.
 5. `node raspberryPi.js`
 
-Browse on `Your_IP:5000`!
+Browse on `Your_IP:5000`, manipulate the LEDs values, monitor the humidity and temperature values and get live capture from the cameras!

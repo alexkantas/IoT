@@ -27,12 +27,6 @@
             </div>
             <div class="navbar-menu">
                 <div class="navbar-end">
-                    <a href="https://github.com/alexzzzboom/IoT" class="navbar-item has-text-grey-darker">
-                        See project on Github
-                        <span class="icon">
-                            <i class="fa fa-github" aria-hidden="true"></i>
-                        </span>
-                    </a>
                     <a href="/links" class="navbar-item has-text-grey-darker">
                         Links
                         <span class="icon">
@@ -59,41 +53,31 @@
                     <section class="message is-danger">
                         <div class="message-header">
                             <p>Wrong Credentials</p>
-                            <button type="button" class="delete" aria-label="delete"></button>
+                            <button class="delete" aria-label="delete"></button>
                         </div>
                         <div class="message-body">
                             Your username and password combination are wrong!
                         </div>
                     </section>
-                    <% } else {%>
-                        <section class="message is-success">
-                            <div class="message-header">
-                                <p>Don't know where to start ?</p>
-                                <button type="button" class="delete" aria-label="delete"></button>
+                    <% } %>
+                        <div class="field">
+                            <label class="label">Username</label>
+                            <div class="control">
+                                <input class="input" type="text" name="username" placeholder="Type your username">
                             </div>
-                            <div class="message-body">
-                                <a href="https://github.com/alexzzzboom/IoT/wiki/Demonstration-Instructions">Click here</a> for instructions on how this project works!
-                            </div>
-                        </section>
-                        <% } %>
-                            <div class="field">
-                                <label class="label">Username</label>
-                                <div class="control">
-                                    <input class="input" type="text" name="username" placeholder="Type your username">
-                                </div>
-                            </div>
+                        </div>
 
-                            <div class="field">
-                                <label class="label">Password</label>
-                                <div class="control">
-                                    <input class="input" type="password" name="password" placeholder="Type your password">
-                                </div>
+                        <div class="field">
+                            <label class="label">Password</label>
+                            <div class="control">
+                                <input class="input" type="password" name="password" placeholder="Type your password">
                             </div>
-                            <p class="control">
-                                <button class="button is-success">
-                                    Login
-                                </button>
-                            </p>
+                        </div>
+                        <p class="control">
+                            <button class="button is-success">
+                                Login
+                            </button>
+                        </p>
             </form>
         </div>
     </div>
@@ -102,11 +86,6 @@
     <div class="hero-foot has-text-centered">
         kantas.net
     </div>
-    <script>
-        document.querySelector('.delete').onclick = function () {
-            document.querySelector('.message').style.display = 'none';
-        }
-    </script>
 </body>
 
 </html>

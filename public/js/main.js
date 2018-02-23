@@ -130,10 +130,10 @@ Vue.component('device', {
     },
     computed: {
         statusText() {
-            return this.isDeviceEnabled ? 'Συσκευή Ενεργή' : 'Συσκευή Ανενεργή';
+            return this.isDeviceEnabled ? 'Device Enabled' : 'Device Disabled';
         },
         buttonText() {
-            return this.isDeviceEnabled ? 'Απενεργοποίηση' : 'Άμεση Ενεργοποίηση';
+            return this.isDeviceEnabled ? ' Disable' : 'Instant Enable';
         },
         statusClass() {
             return this.isDeviceEnabled ? 'has-text-success' : 'has-text-danger';
@@ -142,21 +142,18 @@ Vue.component('device', {
     methods: {
         changeDeviceStatus() {
             this.isLoading = true;
-            socket.emit('setDeviceStatus', { deviceId: this.deviceId, isEnabled: !this.isDeviceEnabled });
-        }
-    },
-    created() {
-        console.log('1');
-        socket.emit('setDeviceStatus', { deviceId: this.deviceId, justReport: true });
-    },
-    mounted() {
-        socket.on('deviceStatus', (data) => {
-            console.log('5', data);
-            if (data.deviceId == this.deviceId) {
-                this.isDeviceEnabled = data.isEnabled;
+            iziToast.success({
+                title: 'Changing LED status',
+                message: `In the actual project, available on github, the LED on Rapberry Pi will change status. Now the status will be change after this notification`,
+                timeout: 15000,
+                position: 'bottomCenter',
+                pauseOnHover: false,
+            });
+            setTimeout(()=>{
                 this.isLoading = false;
-            }
-        });
+                this.isDeviceEnabled = !this.isDeviceEnabled;
+            },15000);
+        }
     },
     template: `<div class="tile is-child box notification is-warning">
     <p class="title"><slot></slot></p>
@@ -177,51 +174,6 @@ Vue.component('device', {
 </div>`
 });
 
-Vue.component('image-area', {
-    props: ['cssClasses', 'imageUrl', 'camId'],
-    data() {
-        return {
-            dateStamp: 0,
-            isLoading: false
-        }
-    },
-    template: `<div class="tile is-child box notification is-info">
-    <p class="title">Εικόνα</p>
-    <p><slot></slot><strong>{{imageDate}}</strong></p>
-    <figure :class="cssObj">
-        <img :src="getImageURL">
-    </figure>
-    <p class="topMargin has-text-centered"><button class="button is-large is-warning is-outlined is-inverted" :class="{'is-loading':isLoading}" @click="updateImage">Ανανέωση εικόνας</button></p>
-</div>`,
-    mounted() {
-        console.log(this.cssClasses, this.imageUrl, this.camId);
-        socket.on('newImage', (data) => {
-            console.log('Image 5', data);
-            if (data.camId == this.camId) {
-                this.dateStamp = parseInt(data.dateStamp);
-                this.isLoading = false;
-            }
-        });
-    },
-    methods: {
-        updateImage() {
-            console.log('Image 1');
-            this.isLoading = true;
-            socket.emit('updateImage', { camId: this.camId });
-        }
-    },
-    computed: {
-        cssObj() {
-            return this.cssClasses.split(' ').reduce((obj, val) => (obj[val] = true, obj), {});
-        },
-        getImageURL() {
-            return `${this.imageUrl}?d=${this.dateStamp}`;
-        },
-        imageDate() {
-            return moment(this.dateStamp).calendar();
-        }
-    }
-});
 
 Vue.component('video-area', {
     props: ['cssClasses', 'imageUrl', 'camId'],
@@ -233,34 +185,30 @@ Vue.component('video-area', {
         }
     },
     template: `<div class="tile is-child box notification is-info">
-    <p class="title">Εικόνα</p>
+    <p class="title">Capture</p>
     <p><slot></slot><strong>{{imageDate}}</strong></p>
     <figure :class="cssObj">
         <img :src="image">
     </figure>
     <p class="topMargin has-text-centered"><button class="button is-large is-warning is-outlined is-inverted" @click="startCapture" :disabled="activeCapture">{{buttonText}}</button></p>
 </div>`,
-    mounted() {
+    created(){
         this.image = this.imageUrl;
-        console.log(this.cssClasses, this.imageUrl, this.camId);
-        socket.emit('getCaptureStatus',{camId:this.camId})
-        socket.on('imageStream', (data) => {
-            console.log('video',5);
-            if (data.camId == this.camId) {
-                this.dateStamp = parseInt(data.dateStamp);
-                this.image=data.image;
-            }
-        });
-        socket.on('captrureStatus',data => {
-            if (data.camId != this.camId) return;
-            this.activeCapture = data.captureStatus
-        });
     },
     methods: {
         startCapture() {
-            console.log('video',1);
+            this.dateStamp = parseInt(Date.now());
             this.activeCapture = true;
-            socket.emit('startCapture', { camId: this.camId });
+            iziToast.success({
+                title: 'Live capture',
+                message: `In the actual project, available on github, the capture from cameras on Raspberry Pi is showing`,
+                timeout: 10000,
+                position: 'bottomCenter',
+                pauseOnHover: false,
+            });
+            setTimeout(()=>{
+                this.activeCapture = false;
+            },10000)
         }
     },
     computed: {
@@ -274,32 +222,16 @@ Vue.component('video-area', {
             return this.dateStamp > 0 ? moment(this.dateStamp).calendar() : '';
         },
         buttonText(){
-            return this.activeCapture ? 'Ζωντανή Εικόνα' : 'Έναρξη Λήψης' ; 
+            return this.activeCapture ? 'Live capture' : 'Start capture' ; 
         }
     }
 });
 
 function askReport() {
-    socket.emit('raspberryStatus');
-    socket.emit('weatherData');
 }
 
 function listen() {
 
-    socket.on('raspberryStatus', data => {
-        console.log("Ok the status!!", data);
-        this.raspberryConnected = data.connected;
-    })
-
-    socket.on('weatherData', data => {
-        console.log("Ok the weather!!", data);
-        this.temperature = data.temperature;
-        this.humidity = data.humidity;
-    })
-
-    socket.on('errorMessage', err => {
-        console.log(err);
-    });
 }
 
 function initMap() {
@@ -356,9 +288,30 @@ const app = new Vue({
         }
     },
     methods: {
-
-    },
-    computed: {
-
+        raspberryStatus(){
+            iziToast.success({
+                title: 'Changing Raspberry Pi status',
+                message: `In the actual project, available on github, the status of Rapberry Pi is showing. Now the status will be change after this notification`,
+                timeout: 10000,
+                position: 'bottomCenter',
+                pauseOnHover: false,
+            });
+            setTimeout(()=>{
+                this.raspberryConnected = !this.raspberryConnected;
+            },10000)
+        },
+        temperatureStatus(){
+            iziToast.success({
+                title: 'Weather data value',
+                message: `In the actual project, available on github, the value of sensors on Rapberry Pi is showing. Now the value will be incresead by 10 after this notification`,
+                timeout: 10000,
+                position: 'bottomCenter',
+                pauseOnHover: false,
+            });
+            setTimeout(()=>{
+                this.temperature+=10;
+                this.humidity+=10;
+            },10000)
+        }
     }
 });

@@ -26,6 +26,11 @@
         </div>
         <div class="navbar-menu">
             <div class="navbar-end">
+                <a href="https://github.com/alexzzzboom/IoT" class="navbar-item">
+                    <span class="icon">
+                        <i class="fa fa-github" aria-hidden="true"></i>
+                    </span>
+                </a>
                 <a href="/links" class="navbar-item">
                     <span class="icon">
                         <i class="fa fa-link" aria-hidden="true"></i>
@@ -42,7 +47,7 @@
 
     <main id="root" class="container">
         <h4 class="title" v-show="loading">
-            <em>Παρακαλώ περιμένετε γίνεται ακόμα φόρτωση της σελίδας...</em>
+            <em>Please wait, page still loading...</em>
         </h4>
         <section class="columns">
             <div class="column is-4 notification is-success">
@@ -52,7 +57,7 @@
                     </strong>'s dashboard</p>
                 </span>
             </div>
-            <div class="column  is-4 is-offset-4 notification" :class="{'is-danger':!raspberryConnected,'is-success':raspberryConnected}">
+            <div class="column  is-4 is-offset-4 notification" :class="{'is-danger':!raspberryConnected,'is-success':raspberryConnected}" @click="raspberryStatus">
                 <p class="has-text-right">Raspberry is
                     <strong v-show="!raspberryConnected">not</strong> connected!</p>
                 <p class="has-text-right littleMargin">
@@ -67,18 +72,18 @@
         <section>
             <div class="tile is-ancestor">
                 <div class="tile is-parent">
-                    <device icon-class="fa-lightbulb-o greenBulp" :device-id='1' :meters="5" :enabled="false">Συσκευή 1</device>
+                    <device icon-class="fa-lightbulb-o greenBulp" :device-id='1' :meters="5" :enabled="false">Device 1</device>
                 </div>
 
                 <div class="tile is-parent">
-                    <device icon-class="fa-lightbulb-o redBulp" :device-id='2' :meters="15" :temp="18" :enabled="true">Συσκευή 2</device>
+                    <device icon-class="fa-lightbulb-o redBulp" :device-id='2' :meters="15" :temp="18" :enabled="true">Device 2</device>
                 </div>
             </div>
 
             <div class="tile is-ancestor">
                 <div class="tile is-parent is-vertical is-4 ">
-                    <div class="tile is-child box notification is-danger">
-                        <p class="title">Θερμοκρασία</p>
+                    <div class="tile is-child box notification is-danger" @click="temperatureStatus">
+                        <p class="title">Temperature</p>
                         <div class="columns">
                             <div class="column centeredElements">
                                 <span class="icon">
@@ -86,17 +91,17 @@
                                 </span>
                             </div>
                             <div class="column">
-                                <p>Η θερμοκρασία είναι</p>
+                                <p>Temperature is</p>
                                 <h1 class="title is-1 temperature">{{temperature}}</h1>
-                                <p>βαθμοί κελσίου</p>
+                                <p>Celcius</p>
                             </div>
                         </div>
                     </div>
 
-                    <video-area css-classes="image is-128x128 sideCam" image-url="/public/img/webcamera.jpg" cam-id="2">Εικόνα του χώρου απο την πλευρική κάμερα όπως καταγράφτηκε </video-area>
+                    <video-area css-classes="image is-128x128 sideCam" image-url="/public/img/webcamera.jpg" cam-id="2">Area's image from side camera as been recoreded </video-area>
 
-                    <div class="tile is-child box notification is-danger">
-                        <p class="title">Υγρασία</p>
+                    <div class="tile is-child box notification is-danger" @click="temperatureStatus">
+                        <p class="title">Humidity</p>
                         <div class="columns">
                             <div class="column centeredElements">
                                 <span class="icon">
@@ -104,7 +109,7 @@
                                 </span>
                             </div>
                             <div class="column">
-                                <p>Η υγρασία στο χώρο είναι
+                                <p>Humidity is
                                     <strong>{{humidity}}</strong> %</p>
                             </div>
                         </div>
@@ -113,7 +118,7 @@
                 </div>
 
                 <div class="tile is-parent">
-                    <video-area css-classes="image is-3by2 topMargin" image-url="/public/img/camera.jpg" cam-id="1">Εικόνα του χώρου όπως καταγράφτηκε </video-area>
+                    <video-area css-classes="image is-3by2 topMargin" image-url="/public/img/camera.jpg" cam-id="1">Area's image as been recoreded </video-area>
                 </div>
             </div>
 
@@ -125,7 +130,7 @@
     <script src="/public/js/iziToast.js"></script>
     <script>
         var socket = io('<%=url%>');
-        moment.locale('el');
+        moment.locale('en');
     </script>
     <script src="/public/js/vue.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLEzuHdS3Y6eLXyXRLGIGIoVDBoYMVjBo"></script>

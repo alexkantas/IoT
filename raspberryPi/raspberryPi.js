@@ -1,10 +1,9 @@
 // Server URL
-const url = 'https://thesis.kantas.net';
-// const url = 'http://192.168.1.66:5000';
+const url = 'http://192.168.1.66:5000'; 
 // Auth Data
 const auth = {
     'user': 'alex',
-    'pass': 'alexinio22'
+    'pass': 'alex'
 }
 // Socket IO
 const socket = require('socket.io-client')(url);

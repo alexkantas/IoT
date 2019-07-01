@@ -264,6 +264,7 @@ const app = new Vue({
         temperature: 0,
         humidity: 0,
         currentUser: '',
+        navbar:false,
         loading: true
     },
     created() {

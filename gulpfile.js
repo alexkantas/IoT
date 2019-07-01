@@ -37,5 +37,6 @@ gulp.task('transpile-js', () =>
 		.pipe(gulp.dest('public/js/dist'))
 );
 
-//gulp.task('default', ['minify-js', 'minify-css']);
-gulp.task('default',['watch-changes']);
+gulp.task('default', ['minify-js']);
+// gulp.task('default', ['minify-js', 'minify-css']);
+//gulp.task('default',['watch-changes']);

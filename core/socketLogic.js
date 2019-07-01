@@ -41,7 +41,7 @@ function socketLogic(app, port) {
         socket.on('setLocation', locationData => {
             trackUsers.add(locationData.username);
             io.emit('userLocation', locationData);
-            rules(locationData);
+            rules(locationData,socket);
         })
 
         socket.on('startCapture', data => {
@@ -102,7 +102,7 @@ function socketLogic(app, port) {
         })
     });
 
-    function rules(locationData) {
+    function rules(locationData,socket) {
         if (locationData.distance > 5) {
             socket.broadcast.to('raspberry').emit('setDeviceStatus', { deviceId: 1, isEnabled: true });
         }

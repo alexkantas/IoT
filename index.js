@@ -8,7 +8,7 @@ const cons = require('consolidate');
 
 // Basic Variables
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 // Router
 const mainRouter = require('./routes/mainRoutes')();

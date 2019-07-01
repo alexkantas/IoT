@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/thesis');
+mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost/thesis');
 mongoose.Promise = require('bluebird');
 
 const homeData = new mongoose.Schema({

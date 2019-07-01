@@ -6,7 +6,7 @@ COPY . /src
 
 WORKDIR /src
 
-RUN  npm install
+RUN  npm install --only=prod
 
 EXPOSE 5000
 

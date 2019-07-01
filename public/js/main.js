@@ -144,7 +144,7 @@ Vue.component('device', {
             this.isLoading = true;
             iziToast.success({
                 title: 'Changing LED status',
-                message: `In the actual project, available on github, the LED on Rapberry Pi will change status. Now the status will be change after this notification`,
+                message: `In the actual project the LED on Rapberry Pi will change status. Now the status will be change after this notification`,
                 timeout: 15000,
                 position: 'bottomCenter',
                 pauseOnHover: false,
@@ -165,9 +165,9 @@ Vue.component('device', {
             <p class="title has-text-centered" :class="statusClass">{{statusText}}</p>
         </div>
         <div class="column">
-            <p>Η συσκευή ενεργοποιήτε αυτόματα όταν:</p>
-            <p v-if="meters > 0">O χρήστης είναι <strong>{{meters}}</strong> μέτρα μακριά από το σπίτι.</p>
-            <p v-if="temp > 0">Η θερμοκρασία κάτω από <strong>{{temp}}</strong> βαθμούς κελσίου</p>
+            <p>Device is turn on when:</p>
+            <p v-if="meters > 0">User is <strong>{{meters}}</strong> meters away from home.</p>
+            <p v-if="temp > 0">Temperature is below <strong>{{temp}}</strong> deggress of Celsius</p>
             <p class="topMargin"><button class="button is-large is-success is-outlined is-inverted" :class="{'is-loading':isLoading}" @click="changeDeviceStatus">{{buttonText}}</button></p>
         </div>
     </div>
@@ -201,7 +201,7 @@ Vue.component('video-area', {
             this.activeCapture = true;
             iziToast.success({
                 title: 'Live capture',
-                message: `In the actual project, available on github, the capture from cameras on Raspberry Pi is showing`,
+                message: `In the actual project the capture from cameras on Raspberry Pi is showing`,
                 timeout: 10000,
                 position: 'bottomCenter',
                 pauseOnHover: false,
@@ -292,7 +292,7 @@ const app = new Vue({
         raspberryStatus(){
             iziToast.success({
                 title: 'Changing Raspberry Pi status',
-                message: `In the actual project, available on github, the status of Rapberry Pi is showing. Now the status will be change after this notification`,
+                message: `In the actual project the status of Rapberry Pi is showing. Now the status will be change after this notification`,
                 timeout: 10000,
                 position: 'bottomCenter',
                 pauseOnHover: false,
@@ -304,7 +304,7 @@ const app = new Vue({
         temperatureStatus(){
             iziToast.success({
                 title: 'Weather data value',
-                message: `In the actual project, available on github, the value of sensors on Rapberry Pi is showing. Now the value will be incresead by 10 after this notification`,
+                message: `In the actual project the value of sensors on Rapberry Pi is showing. Now the value will be incresead by 10 after this notification`,
                 timeout: 10000,
                 position: 'bottomCenter',
                 pauseOnHover: false,

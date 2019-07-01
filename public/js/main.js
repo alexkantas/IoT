@@ -144,7 +144,7 @@ Vue.component('device', {
             this.isLoading = true;
             iziToast.success({
                 title: 'Changing LED status',
-                message: `In the actual project the LED on Rapberry Pi will change status. Now the status will be change after this notification`,
+                message: `In the actual project the LED on Rapberry Pi will change status. Now the status on tile will be change after this notification`,
                 timeout: 15000,
                 position: 'bottomCenter',
                 pauseOnHover: false,
@@ -167,7 +167,7 @@ Vue.component('device', {
         <div class="column">
             <p>Device is turn on when:</p>
             <p v-if="meters > 0">User is <strong>{{meters}}</strong> meters away from home.</p>
-            <p v-if="temp > 0">Temperature is below <strong>{{temp}}</strong> deggress of Celsius</p>
+            <p v-if="temp > 0">Temperature is below <strong>{{temp}}</strong> degrees Celsius</p>
             <p class="topMargin"><button class="button is-large is-success is-outlined is-inverted" :class="{'is-loading':isLoading}" @click="changeDeviceStatus">{{buttonText}}</button></p>
         </div>
     </div>
@@ -201,7 +201,7 @@ Vue.component('video-area', {
             this.activeCapture = true;
             iziToast.success({
                 title: 'Live capture',
-                message: `In the actual project the capture from cameras on Raspberry Pi is showing`,
+                message: `In the actual project you can see the capture from cameras on Raspberry Pi`,
                 timeout: 10000,
                 position: 'bottomCenter',
                 pauseOnHover: false,

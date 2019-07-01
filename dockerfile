@@ -1,4 +1,4 @@
-FROM node:10.15.3
+FROM node:latest
 
 LABEL maintainer="alexk"
 

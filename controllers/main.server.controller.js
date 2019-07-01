@@ -10,7 +10,7 @@ const User = require("../models/user.model.js");
 
 //
 let homeInfo = { lat: 35.32098178540996, lng: 25.10274052619934 };
-const url = 'https://thesis.kantas.net/';
+const url = 'https://thesis.kantas.net';
 
 const mainController = function () {
 

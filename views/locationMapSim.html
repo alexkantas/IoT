@@ -56,7 +56,8 @@
   </script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    var socket = io('localhost:5000');
+    var URL = 'https://thesis.kantas.net/'
+    var socket = io(URL);
     var username = '<%=username%>';
   </script>
   <script src="/public/js/nosleep.js"></script>

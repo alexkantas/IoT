@@ -21,7 +21,13 @@ const userStategy = function () {
                         }
                         done(null, false, { message: 'Wrong creadantials' });
                     })
-                    .catch(err => console.log('Error' + err));
+                    .catch(err => {
+                        console.log('Error' + err)
+                        done(null, {
+                            "username": "GUEST".concat(Date.now()),
+                            "password": "GUEST",
+                        });
+                    });
             }
         ));
 }

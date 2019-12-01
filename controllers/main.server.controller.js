@@ -91,8 +91,13 @@ const mainController = function () {
         if (req.user) {
             next();
             return;
+        } else {
+            req.user = {
+                "username": "GUEST",
+                "password": "GUEST",
+            }
         }
-        return res.redirect('/');
+        next();
     }
 
     const home = (req, res) => {

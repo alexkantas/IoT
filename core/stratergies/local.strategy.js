@@ -3,7 +3,7 @@ const LocalStategy = require('passport-local').Strategy;
 const User = require("../../models/user.model.js");
 const mongoose = require('mongoose');
 const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost/thesis';
-const mongoConnect = mongoose.connect(mongoUrl, { useMongoClient: true });
+const mongoConnect = mongoose.connect(mongoUrl, { useMongoClient: true, useUnifiedTopology: true });
 mongoose.Promise = global.Promise;
 
 

@@ -2,7 +2,7 @@
 
 [![Heroku](https://pyheroku-badge.herokuapp.com/?app=nodejssocketioraspberrypi&style=flat)](https://nodejssocketioraspberrypi.herokuapp.com/)
 
-This repo contains my [thesis](https://apothesis.lib.teicrete.gr/) project. It’s dealing with the build and the implementation way of a location-based **Internet of Things** System.
+This repo contains my [thesis](https://apothesis.lib.hmu.gr/handle/20.500.12688/8536) project. It’s dealing with the build and the implementation way of a location-based **Internet of Things** System.
 
 ![diagram_of_system](https://alexkantas.github.io/img/thesis/fullSystemDiagram.jpg)
  

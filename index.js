@@ -29,5 +29,6 @@ require('./core/socketLogic')(app, port);
 // Assign routes
 app.use('/', mainRouter);
 
+module.exports = app;
 // Listening
 //app.listen(port, () => { console.log(`Server listen on port ${port}`) });
